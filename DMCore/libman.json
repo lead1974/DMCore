@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "font-awesome@4.7.0",
+      "files": [ "css/font-awesome.min.css", "fonts/fontawesome-webfont.woff", "fonts/fontawesome-webfont.woff2", "fonts/fontawesome-webfont.eot", "fonts/fontawesome-webfont.svg", "fonts/fontawesome-webfont.ttf", "fonts/FontAwesome.otf" ],
+      "destination": "wwwroot/lib/font-awesome"
+    },
+    {
+      "library": "animate.css@3.7.0",
+      "files": [ "animate.min.css" ],
+      "destination": "wwwroot/lib/animate"
+    },
+    {
+      "library": "prettyPhoto@3.1.6",
+      "files": [ "css/prettyPhoto.min.css", "js/jquery.prettyPhoto.min.js" ],
+      "destination": "wwwroot/lib/prettyPhoto"
+    }
+  ]
+}

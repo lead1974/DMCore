@@ -1,0 +1,47 @@
+﻿@page
+@model DMCore.Pages.Blog.indexModel
+@{
+    Layout = "~/Pages/Shared/_LayoutBlog.cshtml";
+}
+
+<h2>Blog</h2>
+<div>
+    <div class="blog-item">
+        <img class="img-responsive img-blog" src="~/images/blog/blog1.jpg" alt="" />
+        <div class="blog-content">
+            <a href="~/blog/post?1"><h3>Duis sed odio sit amet nibh vulputate cursus</h3></a>
+            <div class="entry-meta">
+                <span><i class="fa fa-user" aria-hidden="true"></i> <a href="#">John</a></span>
+                <span><i class="fa fa-folder" aria-hidden="true"></i> <a href="#">Bootstrap</a></span>
+                <span><i class="fa fa-calendar" aria-hidden="true"></i> Sept 16th, 2012</span>
+                <span><i class="fa fa-comment" aria-hidden="true"></i> <a href="~/blog/post?1#comments">3 Comments</a></span>
+            </div>
+            <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+            <a class="btn btn-default" href="~/blog/post?1">Read More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        </div>
+    </div><!--/.blog-item-->
+    <div class="blog-item">
+        <img class="img-responsive img-blog" src="images/blog/blog2.jpg" alt="" />
+        <div class="blog-content">
+            <a href="~/blog/post?2"><h3>Conubia nostra per inceptos himenaeos</h3></a>
+            <div class="entry-meta">
+                <span><i class="fa fa-user" aria-hidden="true"></i> <a href="#">John</a></span>
+                <span><i class="fa fa-folder" aria-hidden="true"></i> <a href="#">Bootstrap</a></span>
+                <span><i class="fa fa-calendar" aria-hidden="true"></i> Sept 16th, 2012</span>
+                <span><i class="fa fa-comment" aria-hidden="true"></i> <a href="~/blog/post?1#comments">5 Comments</a></span>
+            </div>
+            <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+            <a class="btn btn-default" href="~/blog/post?2">Read More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        </div>
+    </div><!--/.blog-item-->
+    <ul class="pagination pagination-lg">
+        <li><a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+    </ul><!--/.pagination-->
+</div>
+
