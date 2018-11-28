@@ -9,26 +9,24 @@ namespace DMCore.Data.Repositories
 {
     public interface IEntityRepository<T>
     {
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
-        IEnumerable<T> GetAllByCategory(long Id);
-        IEnumerable<T> GetAllActive();
-        IEnumerable<T> GetAllPending();
-        IEnumerable<T> GetAllExpired();
-        T FindById(long Id);
-        T FindByName(string Name);
-        void Add(T entity);
-        void Update(T entity);
-        void Remove(T entity);
-        bool SaveAll();
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAllByCategory(long id);
+        Task<IEnumerable<T>> GetByStatus(int status);
+        Task<IEnumerable<T>> GetByName(string name);
+        Task<T> GetById(long id);
+        Task<bool> Exist(long id);
+        Task<T> Add(T entity);
+        Task<T> Update(T entity);
+        Task<T> Remove(long id);
+        //IEnumerable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
     }
     public interface IUserRepository<T> : IEntityRepository<AuthUser>
     {
     }
     public interface IDealRepository : IEntityRepository<Deal>
     {
-        IEnumerable<Deal> GetAllBySearchString(string SearchString);
-        IEnumerable<Deal> GetAllPopular(int Views);
+        Task<IEnumerable<Deal>> GetAllBySearchString(string SearchString);
+        Task<IEnumerable<Deal>> GetAllPopular(int Views);
     }
 
     public interface IDealCategoryRepository : IEntityRepository<DealCategory>
@@ -36,8 +34,8 @@ namespace DMCore.Data.Repositories
     }
     public interface ICouponRepository : IEntityRepository<Coupon>
     {
-        IEnumerable<Coupon> GetAllBySearchString(string SearchString);
-        IEnumerable<Coupon> GetAllPopular(int Views);
+        Task<IEnumerable<Coupon>> GetAllBySearchString(string SearchString);
+        Task<IEnumerable<Coupon>> GetAllPopular(int Views);
     }
     public interface ICouponCategoryRepository : IEntityRepository<CouponCategory>
     {

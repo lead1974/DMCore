@@ -21,4 +21,10 @@ namespace DMCore.Data
             Expired = 9
         }
     }
+    public static class RoleName
+    {
+        public const string CanManageSite = "CanManageSite";
+        public const string CanManageInvoices = "CanManageInvoices";
+        public const string CanManageCustomers = "CanManageCustomers";
+    }
 }

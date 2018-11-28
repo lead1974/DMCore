@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DMCore.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DMCore.Data.Repositories
@@ -24,100 +25,87 @@ namespace DMCore.Data.Repositories
             _logger = logger;
         }
 
-        public IEnumerable<Deal> GetAll()
+        public async Task<IEnumerable<Deal>> GetAll()
         {
            try
             {
-                return _context.Deals.OrderByDescending(t => t.CreatedTS);
+                return await _context.Deals.OrderByDescending(t => t.CreatedTS).ToListAsync();
             }
             catch (Exception ex)
             {
                 _logger.LogError("Could not get deals from database", ex);
                 return null;
             }
-}
+         }
 
-        public Deal FindById(long Id)
+        public async Task<Deal> GetById(long Id)
         {
-            return _context.Deals
-                           .Where(d => d.Id == Id)
-                           .FirstOrDefault();
+            return await _context.Deals.SingleOrDefaultAsync(d => d.Id == Id);
         }
 
-        public Deal FindByName(string Name)
+        public async Task<IEnumerable<Deal>> GetByName(string Name)
         {
-            return _context.Deals
-                           .Where(d => d.Title.ToLower().Contains(Name.ToLower()))
-                           .FirstOrDefault();
+            return await _context.Deals
+                           .Where(d => d.Title.ToLower().Contains(Name.ToLower())).ToListAsync();
         }
 
-        public IEnumerable<Deal> GetAllActive()
+        //Get by Status : Active, Pending, Expired based on Const.cs
+        public async Task<IEnumerable<Deal>> GetByStatus(int status)
         {
-            return _context.Deals
+            return await _context.Deals
+                                 .OrderByDescending(t => t.CreatedTS)
+                                 .Where(s => s.Status.Equals(status)).ToListAsync();
+
+        }
+
+        public async Task<IEnumerable<Deal>> GetAllByCategory(long Id)
+        {
+            return await _context.Deals
                            .OrderByDescending(t => t.CreatedTS)
-                           .Where(s => s.Status.Equals(c.DealStatus.Active));
-
+                           .Where(c => c.DealCategoryId.Equals(Id)).ToListAsync();
         }
 
-        public IEnumerable<Deal> GetAllExpired()
-        {
-            return _context.Deals
-                           .OrderByDescending(t => t.CreatedTS)
-                           .Where(s => s.Status.Equals(c.DealStatus.Expired));
-        }
-        public IEnumerable<Deal> GetAllPending()
-        {
-            return _context.Deals
-                           .OrderByDescending(t => t.CreatedTS)
-                           .Where(s => s.Status.Equals(c.DealStatus.Pending));
-        }
-
-        public IEnumerable<Deal> GetAllByCategory(long Id)
-        {
-            return _context.Deals
-                           .OrderByDescending(t => t.CreatedTS)
-                           .Where(c => c.DealCategoryId.Equals(Id));
-        }
-
-        public IEnumerable<Deal> GetAllBySearchString(string SearchString)
+        public async Task<IEnumerable<Deal>> GetAllBySearchString(string SearchString)
         {
             var ss = SearchString.ToLower();
-            return _context.Deals
+            return await _context.Deals
                            .OrderByDescending(t => t.CreatedTS)
                            .Where(s => s.Title.ToLower().Contains(ss)
-                                  || s.Instructions.ToLower().Contains(ss));
+                                  || s.Instructions.ToLower().Contains(ss)).ToListAsync(); 
         }
 
-        public IEnumerable<Deal> GetAllIncluding(params Expression<Func<Deal, object>>[] includeProperties)
+
+        public async Task<IEnumerable<Deal>> GetAllPopular(int Views)
         {
-            throw new NotImplementedException();
+            return await _context.Deals
+                                   .OrderByDescending(t => t.CreatedTS)
+                                   .Where(s => s.Status.Equals(c.DealStatus.Active) && s.Views > 10 && s.Likes  > 5 &&  s.Likes/s.Dislikes > 2).ToListAsync();
         }
 
-        public IEnumerable<Deal> GetAllPopular(int Views)
+        public async Task<bool> Exist(long id)
         {
-            return _context.Deals
-               .OrderByDescending(t => t.CreatedTS)
-               .Where(s => s.Status.Equals(c.DealStatus.Active) && s.Views > 10 && s.Likes  > 5 &&  s.Likes/s.Dislikes > 2);
+            return await _context.Deals.AnyAsync(c => c.Id == id);
         }
 
-        public void Add(Deal entity)
+        public async Task<Deal> Add(Deal entity)
         {
-            _context.Add(entity);
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<Deal> Update(Deal entity)
+        {
+            _context.Deals.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<Deal> Remove(long Id)
+        {
+            var deal = await _context.Deals.SingleOrDefaultAsync(a => a.Id == Id);
+            _context.Deals.Remove(deal);
+            await _context.SaveChangesAsync();
+            return deal;
+        }
 
-        }
-        public void Remove(Deal entity)
-        {
-            _context.Remove(entity);
-        }
-
-        public void Update(Deal entity)
-        {
-            _context.Update(entity);
-        }
-
-        public bool SaveAll()
-        {
-            return _context.SaveChanges() > 0;
-        }
     }
 }
