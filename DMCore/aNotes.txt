@@ -10,6 +10,7 @@
    g. push an existing local repository to remote repository: git push -u origin master
 
 2. Work with EF:
+add-migration initial -verbose
 dotnet ef migrations add InitialModel
 dotnet ef database update
 dotnet ef migrations remove

@@ -37,6 +37,19 @@ namespace DMCore.Data.Repositories
                 return null;
             }
          }
+        public int GetCount()
+        {
+            try
+            {
+                return _context.Deals.Count();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get deals from database", ex);
+                return 0;
+            }
+        }
+
 
         public async Task<Deal> GetById(long Id)
         {

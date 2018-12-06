@@ -27,6 +27,7 @@ namespace DMCore.Data.Repositories
     {
         Task<IEnumerable<Deal>> GetAllBySearchString(string SearchString);
         Task<IEnumerable<Deal>> GetAllPopular(int Views);
+        int GetCount();
     }
 
     public interface IDealCategoryRepository : IEntityRepository<DealCategory>

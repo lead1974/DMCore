@@ -58,12 +58,21 @@ namespace DMCore.Controllers
         [Produces(typeof(DbSet<Deal>))]
         public IActionResult GetDeals()
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var results = new ObjectResult(_dealRepo.GetAll())
             {
                 StatusCode = (int)HttpStatusCode.OK
             };
 
-            //Request.HttpContext.Response.Headers.Add("X-Total-Count", _dealRepo.GetAll().Count().ToString());
+            if (results == null)
+            {
+                return NotFound();
+            }
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", _dealRepo.GetCount().ToString());
 
             return results;
         }
@@ -71,14 +80,16 @@ namespace DMCore.Controllers
         // GET api/<controller>/5
         [HttpGet("{id}")]
         [Produces(typeof(Deal))]
-        public async Task<IActionResult> GetDeal(long id)
+        public async Task<IActionResult> GetDeal(int id)
         {
+            long Id = (long)id;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var deal = await _dealRepo.GetById(id);
+            var deal = await _dealRepo.GetById(Id);
 
             if (deal == null)
             {
@@ -105,14 +116,16 @@ namespace DMCore.Controllers
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         [Produces(typeof(Deal))]
-        public async Task<IActionResult> PutAsync([FromRoute] long id, [FromBody] Deal deal)
+        public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] Deal deal)
         {
+            long Id = (long)id;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != deal.Id)
+            if (Id != deal.Id)
             {
                 return BadRequest();
             }
@@ -124,7 +137,7 @@ namespace DMCore.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await DealExists(id))
+                if (!await DealExists(Id))
                 {
                     return NotFound();
                 }
@@ -138,19 +151,21 @@ namespace DMCore.Controllers
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         [Produces(typeof(Deal))]
-        public async Task<IActionResult> Delete([FromRoute] long id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            long Id = (long)id;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!await DealExists(id))
+            if (!await DealExists(Id))
             {
                 return NotFound();
             }
 
-            await _dealRepo.Remove(id);
+            await _dealRepo.Remove(Id);
 
             return Ok();
         }
