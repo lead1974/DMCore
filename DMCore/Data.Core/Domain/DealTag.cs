@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DMCore.Data.Core.Domain
+{
+    public class DealTag
+    {
+        public DealTag()
+        {
+            Deals = new HashSet<Deal>();
+        }
+
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public virtual ICollection<Deal> Deals { get; set; }
+    }
+}

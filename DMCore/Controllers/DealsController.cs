@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using DMCore.Data;
-using DMCore.Data.Models;
-using DMCore.Data.Repositories;
+using DMCore.Data.Core;
+using DMCore.Data.Core.Domain;
+using DMCore.Data.Core.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,19 +17,19 @@ namespace DMCore.Controllers
     [Route("api/[controller]")]
     public class DealsController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<AuthUser> _userManager;
         private readonly SignInManager<AuthUser> _signInManager;
         private readonly RoleManager<AuthRole> _roleManager;
         private readonly ILogger _logger;
         private readonly IConfigurationRoot _config;
         private readonly IHostingEnvironment _env;
-        private readonly IDealRepository _dealRepo;
 
         //private readonly IMailService _emailSender;
         //private readonly ISmsService _smsSender;
 
         public DealsController(
-            IDealRepository dealRepo,
+            IUnitOfWork unitOfWork,
             UserManager<AuthUser> userManager,
             SignInManager<AuthUser> signInManager,
             RoleManager<AuthRole> roleManager,
@@ -39,7 +37,7 @@ namespace DMCore.Controllers
             IConfigurationRoot config,
             IHostingEnvironment env)
         {
-            _dealRepo = dealRepo;
+            _unitOfWork = unitOfWork;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -49,7 +47,7 @@ namespace DMCore.Controllers
         }
         private async Task<bool> DealExists(long id)
         {
-            return await _dealRepo.Exist(id);
+            return await _unitOfWork.Deals.Exist(id);
         }
 
 
@@ -63,7 +61,7 @@ namespace DMCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var results = new ObjectResult(_dealRepo.GetAll())
+            var results = new ObjectResult(_unitOfWork.Deals.GetAll())
             {
                 StatusCode = (int)HttpStatusCode.OK
             };
@@ -72,7 +70,7 @@ namespace DMCore.Controllers
             {
                 return NotFound();
             }
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", _dealRepo.GetCount().ToString());
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", _unitOfWork.Deals.GetCount().ToString());
 
             return results;
         }
@@ -89,7 +87,7 @@ namespace DMCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var deal = await _dealRepo.GetById(Id);
+            var deal = await _unitOfWork.Deals.Find(d=> d.Id==Id);
 
             if (deal == null)
             {
@@ -109,7 +107,7 @@ namespace DMCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            _dealRepo.Add(deal);
+            _unitOfWork.Deals.Add(deal);
             return CreatedAtAction("FindById", new { id = deal.Id }, deal);
         }
 
@@ -132,7 +130,7 @@ namespace DMCore.Controllers
 
             try
             {
-                await _dealRepo.Update(deal);
+                _unitOfWork.Deals.Update(deal);
                 return Ok(deal);
             }
             catch (DbUpdateConcurrencyException)
@@ -164,8 +162,8 @@ namespace DMCore.Controllers
             {
                 return NotFound();
             }
-
-            await _dealRepo.Remove(Id);
+            var deal = await _unitOfWork.Deals.SingleOrDefault(d => d.Id == Id);
+            _unitOfWork.Deals.Remove(deal);
 
             return Ok();
         }

@@ -2,34 +2,29 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static System.Environment;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Environment;
 
-namespace DMCore.Data.Models
+namespace DMCore.Data.Core.Domain
 {
-    [Table("Deals")]
-    public class Deal
+    public class Store
     {
         public long Id { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string Title { get; set; }
-
+        public string Name { get; set; }
+        public string Domain { get; set; }
         public string Instructions { get; set; }
         public IEnumerable<string> InstructionsList
         {
             get { return (Instructions ?? string.Empty).Split(NewLine); }
         }
 
-        [Required]
-        public string URL { get; set; }
-
-        [StringLength(255)]
-        public string Price { get; set; }
-
-        public string ImageURL { get; set; }
+        public string StoreTips { get; set; }
+        public IEnumerable<string> StoreTipsList
+        {
+            get { return (StoreTips ?? string.Empty).Split(NewLine); }
+        }
 
         #region Image
 
@@ -61,29 +56,13 @@ namespace DMCore.Data.Models
         }
 
         #endregion
-        public bool  DMProduct { get; set; }
 
-        public DateTime StartTS { get; set; }
-        public DateTime EndTS { get; set; }
-
-        public bool  Approved { get; set; }
-        public int  Status { get; set; }
-
-        public int Views { get; set; }
-        public int Likes { get; set; }
-        public int Dislikes { get; set; }
-
-        public string  CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public DateTime CreatedTS { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedTS { get; set; }
 
-
         public DealCategory DealCategory { get; set; }
         public long DealCategoryId { get; set; }
-
-        public AffiliateSite AffiliateSite { get; set; }
-        public long? AffiliateSiteId { get; set; }
-
     }
 }

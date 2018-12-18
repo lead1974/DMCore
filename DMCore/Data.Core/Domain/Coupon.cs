@@ -6,15 +6,12 @@ using static System.Environment;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DMCore.Data.Models
+namespace DMCore.Data.Core.Domain
 {
-    [Table("Coupons")]
     public class Coupon
     {
         public long Id { get; set; }
 
-        [Required]
-        [StringLength(255)]
         public string Title { get; set; }
 
         public string Instructions { get; set; }
@@ -25,7 +22,6 @@ namespace DMCore.Data.Models
 
         public string URL { get; set; }
 
-        [StringLength(255)]
         public string Code { get; set; }
 
         public DateTime StartTS { get; set; }
@@ -43,8 +39,8 @@ namespace DMCore.Data.Models
         public string UpdatedBy { get; set; }
         public DateTime UpdatedTS { get; set; }
 
-        public CouponCategory CouponCategory { get; set; }
-        public long CouponCategoryId { get; set; }
+        public DealCategory DealCategory { get; set; }
+        public long DealCategoryId { get; set; }
 
         public AffiliateSite AffiliateSite { get; set; }
         public long? AffiliateSiteId { get; set; }

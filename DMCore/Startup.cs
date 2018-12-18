@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DMCore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DMCore.Data.Repositories;
+using DMCore.Data.Core.Repositories;
 using DMCore.Services;
-using DMCore.Data.Models;
+using DMCore.Data.Core.Domain;
 using Microsoft.AspNetCore.Identity;
+using DMCore.Data.Persistance;
+using DMCore.Data.Persistance.Repositories;
+using DMCore.Data.Core;
 
 namespace DMCore
 {
@@ -82,7 +79,7 @@ namespace DMCore
             // Add application services.
             services.AddSingleton(_config);
             services.AddTransient<GlobalService, GlobalService>();
-            services.AddScoped<IDealRepository, DealRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //services.AddTransient<DMSeedData>();
 

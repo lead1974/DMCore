@@ -5,15 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DMCore.Data.Models
+namespace DMCore.Data.Core.Domain
 {
-    [Table("StoreCategories")]
-    public class StoreCategory
+    [Table("AffiliateSites")]
+    public class AffiliateSite
     {
         public long Id { get; set; }
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string URL { get; set; }
 
         public string CreatedBy { get; set; }
         public DateTime CreatedTS { get; set; }

@@ -7,18 +7,19 @@ namespace DMCore.Data
 {
     public static class c
     {
-        public enum DealStatus
+        public enum Status
         {
-            Pending = 0,
-            Active = 1,
-            Expired = 9
+            Pending,
+            Active,
+            Deleted,
+            Expired
         }
 
         public enum Views
         {
-            Popular = 0,
-            Active = 1,
-            Expired = 9
+            Popular0,
+            Active,
+            Expired
         }
     }
     public static class RoleName
