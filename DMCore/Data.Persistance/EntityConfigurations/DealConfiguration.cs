@@ -18,9 +18,11 @@ namespace DMCore.Data.Persistance.EntityConfigurations
             builder.Property(x => x.Price).HasColumnName("Price").IsRequired();
             builder.Property(x => x.Title).HasColumnName("Title").HasMaxLength(255).IsRequired();
 
+            //builder.HasOne(x => x.DealCategory).WithMany(b => b.Deals).HasForeignKey(b => b.DealCategoryId).OnDelete(DeleteBehavior.Cascade);
+            //builder.HasOne(x => x.DealTag).WithMany(b => b.Deals).HasForeignKey(b => b.DealTagId).OnDelete(DeleteBehavior.SetNull);
+
             //builder.Metadata.FindNavigation(nameof(Author.Blogs)).SetPropertyAccessMode(PropertyAccessMode.Field);
-            builder.HasOne(x => x.DealCategory).WithMany(b => b.Deals).HasForeignKey(b => b.DealCategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

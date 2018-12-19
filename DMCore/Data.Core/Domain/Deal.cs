@@ -12,7 +12,7 @@ namespace DMCore.Data.Core.Domain
     {
         public Deal()
         {
-            Tags = new HashSet<DealTag>();
+            
         }
         public long Id { get; set; }
 
@@ -81,10 +81,11 @@ namespace DMCore.Data.Core.Domain
         public DealCategory DealCategory { get; set; }
         public long DealCategoryId { get; set; }
 
+        public DealTag DealTag { get; set; }
+        public long DealTagId { get; set; }
+
         public AffiliateSite AffiliateSite { get; set; }
         public long? AffiliateSiteId { get; set; }
-
-        public virtual ICollection<DealTag> Tags { get; set; }
 
     }
 }

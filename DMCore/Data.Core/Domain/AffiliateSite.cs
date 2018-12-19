@@ -11,14 +11,39 @@ namespace DMCore.Data.Core.Domain
     public class AffiliateSite
     {
         public long Id { get; set; }
-        [Required]
-        [StringLength(255)]
         public string Name { get; set; }
+        public string Domain { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string URL { get; set; }
+        #region Image
 
+        public byte[] Image { get; set; }
+
+        public string ImageContentType { get; set; }
+
+        public string GetInlineImageSrc()
+        {
+            if (Image == null || ImageContentType == null)
+                return null;
+
+            var base64Image = System.Convert.ToBase64String(Image);
+            return $"data:{ImageContentType};base64,{base64Image}";
+        }
+
+        public void SetImage(Microsoft.AspNetCore.Http.IFormFile file)
+        {
+            if (file == null)
+                return;
+
+            ImageContentType = file.ContentType;
+
+            using (var stream = new System.IO.MemoryStream())
+            {
+                file.CopyTo(stream);
+                Image = stream.ToArray();
+            }
+        }
+
+        #endregion
         public string CreatedBy { get; set; }
         public DateTime CreatedTS { get; set; }
         public string UpdatedBy { get; set; }

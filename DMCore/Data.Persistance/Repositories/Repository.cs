@@ -61,6 +61,11 @@ namespace DMCore.Data.Repositories
         {
             _context.Set<TEntity>().Remove(entity);
         }
+        public void Remove(long Id)
+        {
+            var entity = _context.Set<TEntity>().Find(Id);
+            _context.Set<TEntity>().Remove(entity);
+        }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {

@@ -12,9 +12,9 @@ namespace DMCore.Data.Persistance.EntityConfigurations
             builder.ToTable("AffiliateSites");
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id).HasColumnName("Id").ValueGeneratedOnAdd();
-            builder.Property(x => x.Name).HasColumnName("Name").HasMaxLength(255).IsRequired();
-            builder.Property(x => x.URL).HasColumnName("URL").HasMaxLength(255).IsRequired();
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Name).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.Domain).HasMaxLength(255).IsRequired();
 
         }
     }

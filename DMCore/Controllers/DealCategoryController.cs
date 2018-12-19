@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
-using DMCore.Data.Core.Repositories;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,12 +12,9 @@ namespace DMCore.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class DealsController : Controller
+    public class DealCategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<AuthUser> _userManager;
-        private readonly SignInManager<AuthUser> _signInManager;
-        private readonly RoleManager<AuthRole> _roleManager;
         private readonly ILogger _logger;
         private readonly IConfigurationRoot _config;
         private readonly IHostingEnvironment _env;
@@ -28,24 +22,18 @@ namespace DMCore.Controllers
         //private readonly IMailService _emailSender;
         //private readonly ISmsService _smsSender;
 
-        public DealsController(
+        public DealCategoryController(
             IUnitOfWork unitOfWork,
-            UserManager<AuthUser> userManager,
-            SignInManager<AuthUser> signInManager,
-            RoleManager<AuthRole> roleManager,
             ILoggerFactory loggerFactory,
             IConfigurationRoot config,
             IHostingEnvironment env)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
-            _logger = loggerFactory.CreateLogger<DealsController>();
+            _logger = loggerFactory.CreateLogger<DealCategoryController>();
             _config = config;
             _env = env;
         }
-        private async Task<bool> DealExists(long id)
+        private async Task<bool> Exists(long id)
         {
             return await _unitOfWork.Deals.Exist(id);
         }
@@ -53,15 +41,15 @@ namespace DMCore.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        [Produces(typeof(DbSet<Deal>))]
-        public IActionResult GetDeals()
+        [Produces(typeof(DbSet<DealCategory>))]
+        public IActionResult GetAll()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var results = new ObjectResult(_unitOfWork.Deals.GetAll())
+            var results = new ObjectResult(_unitOfWork.DealCategories.GetAll())
             {
                 StatusCode = (int)HttpStatusCode.OK
             };
@@ -70,15 +58,15 @@ namespace DMCore.Controllers
             {
                 return NotFound();
             }
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", _unitOfWork.Deals.GetCount().ToString());
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", _unitOfWork.DealCategories.GetCount().ToString());
 
             return results;
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        [Produces(typeof(Deal))]
-        public async Task<IActionResult> GetDeal(int id)
+        [Produces(typeof(DealCategory))]
+        public async Task<IActionResult> GetById(int id)
         {
             long Id = (long)id;
 
@@ -87,34 +75,34 @@ namespace DMCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var deal = await _unitOfWork.Deals.Find(d=> d.Id==Id);
+            var dealCategory = await _unitOfWork.DealCategories.Find(d=> d.Id==Id);
 
-            if (deal == null)
+            if (dealCategory == null)
             {
                 return NotFound();
             }
 
-            return Ok(deal);
+            return Ok(dealCategory);
         }
 
         // POST api/<controller>
         [HttpPost]
-        [Produces(typeof(Deal))]
-        public IActionResult Post([FromBody] Deal deal)
+        [Produces(typeof(DealCategory))]
+        public IActionResult Post([FromBody] DealCategory dealCategory)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _unitOfWork.Deals.Add(deal);
-            return CreatedAtAction("FindById", new { id = deal.Id }, deal);
+            _unitOfWork.DealCategories.Add(dealCategory);
+            return CreatedAtAction("FindById", new { id = dealCategory.Id }, dealCategory);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        [Produces(typeof(Deal))]
-        public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] Deal deal)
+        [Produces(typeof(DealCategory))]
+        public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] DealCategory dealCategory)
         {
             long Id = (long)id;
 
@@ -123,19 +111,19 @@ namespace DMCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (Id != deal.Id)
+            if (Id != dealCategory.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                _unitOfWork.Deals.Update(deal);
-                return Ok(deal);
+                _unitOfWork.DealCategories.Update(dealCategory);
+                return Ok(dealCategory);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await DealExists(Id))
+                if (!await Exists(Id))
                 {
                     return NotFound();
                 }
@@ -148,7 +136,7 @@ namespace DMCore.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        [Produces(typeof(Deal))]
+        [Produces(typeof(DealCategory))]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             long Id = (long)id;
@@ -158,13 +146,12 @@ namespace DMCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!await DealExists(Id))
+            if (!await Exists(Id))
             {
                 return NotFound();
             }
-            var deal = await _unitOfWork.Deals.SingleOrDefault(d => d.Id == Id);
-            _unitOfWork.Deals.Remove(deal);
-
+            
+            _unitOfWork.DealCategories.Remove(id);
             return Ok();
         }
     }

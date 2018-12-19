@@ -42,6 +42,9 @@ namespace DMCore.Data.Core.Domain
         public DealCategory DealCategory { get; set; }
         public long DealCategoryId { get; set; }
 
+        public Store Store { get; set; }
+        public long StoreId { get; set; }
+
         public AffiliateSite AffiliateSite { get; set; }
         public long? AffiliateSiteId { get; set; }
     }
