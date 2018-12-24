@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace DMCore.Data.Core.Domain
 {
-    [Table("AffiliateSites")]
     public class AffiliateSite
     {
+        public AffiliateSite()
+        {
+            Deals = new HashSet<Deal>();
+            Coupons = new HashSet<Coupon>();
+        }
         public long Id { get; set; }
         public string Name { get; set; }
         public string Domain { get; set; }
@@ -48,5 +52,9 @@ namespace DMCore.Data.Core.Domain
         public DateTime CreatedTS { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedTS { get; set; }
+
+
+        public virtual ICollection<Deal> Deals { get; set; }
+        public virtual ICollection<Coupon> Coupons { get; set; }
     }
 }

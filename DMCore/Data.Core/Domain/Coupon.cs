@@ -40,7 +40,7 @@ namespace DMCore.Data.Core.Domain
         public DateTime UpdatedTS { get; set; }
 
         public DealCategory DealCategory { get; set; }
-        public long DealCategoryId { get; set; }
+        public long? DealCategoryId { get; set; }
 
         public Store Store { get; set; }
         public long StoreId { get; set; }

@@ -11,15 +11,8 @@ namespace DMCore.Data.Persistance
 {
     public class UnitOfWork : IUnitOfWork
     {
-        protected readonly DMDbContext _context;
 
-        public UnitOfWork(DMDbContext context)
-        {
-            _context = context; 
-        }
-
-        public DMDbContext Context { get; }
-
+        public DMDbContext _context { get; }
         public IDealRepository Deals { get; private set; }
 
         public ICouponRepository Coupons { get; private set; }
@@ -29,6 +22,16 @@ namespace DMCore.Data.Persistance
 
         public IDealCategoryRepository DealCategories { get; private set; }
 
+        public UnitOfWork(DMDbContext context)
+        {
+            _context = context;
+            Deals = new DealRepository(_context);
+            //Coupons = new CouponRepository(_context);
+            DealCategories = new DealCategoryRepository(_context);
+            //Stores = new StoreRepository(_context);
+            //TagDeals = new DealTagRepository(_context);
+        }
+        
 
         public int Complete()
         {

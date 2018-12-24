@@ -62,14 +62,14 @@ namespace DMCore.Data
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            var roleStore = new RoleStore<AuthRole>(_unitOfWork.Context);
+            var roleStore = new RoleStore<AuthRole>(_unitOfWork._context);
 
-            if (!_unitOfWork.Context.AuthRoles.Any(r => r.Name == RoleName.CanManageSite))
+            if (!_unitOfWork._context.Roles.Any(r => r.Name == RoleName.CanManageSite))
             {
                 await roleStore.CreateAsync(new AuthRole { Name = RoleName.CanManageSite, NormalizedName = RoleName.CanManageSite, RoleName = "Site Administrator" });
             }
 
-            if (!_unitOfWork.Context.AuthUsers.Any(u => u.UserName == user.UserName))
+            if (!_unitOfWork._context.Users.Any(u => u.UserName == user.UserName))
             {
                 var password = new PasswordHasher<AuthUser>();
                 var hashed = password.HashPassword(user, "balda1234");

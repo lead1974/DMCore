@@ -12,9 +12,9 @@ namespace DMCore.Data.Persistance.EntityConfigurations
             builder.ToTable("DealCategories");
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id).HasColumnName("Id").ValueGeneratedOnAdd();
-            builder.Property(x => x.Name).HasColumnName("Name").HasMaxLength(255).IsRequired();
-            builder.Property(x => x.Status).HasColumnName("Status").HasMaxLength(50);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Name).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.Status).HasMaxLength(50);
 
         }
     }

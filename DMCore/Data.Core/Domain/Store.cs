@@ -10,6 +10,11 @@ namespace DMCore.Data.Core.Domain
 {
     public class Store
     {
+        public Store()
+        {
+            Deals = new HashSet<Deal>();
+            Coupons = new HashSet<Coupon>();
+        }
         public long Id { get; set; }
 
         public string Name { get; set; }
@@ -64,5 +69,8 @@ namespace DMCore.Data.Core.Domain
 
         public DealCategory DealCategory { get; set; }
         public long DealCategoryId { get; set; }
+
+        public virtual ICollection<Deal> Deals { get; set; }
+        public virtual ICollection<Coupon> Coupons { get; set; }
     }
 }

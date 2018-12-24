@@ -16,7 +16,9 @@ namespace DMCore.Data.Persistance.EntityConfigurations
             builder.Property(x => x.Title).HasMaxLength(255).IsRequired();
             builder.Property(x => x.Code).HasMaxLength(255).IsRequired();
 
-            //builder.HasOne(x => x.DealCategory).WithMany(b => b.Coupons).HasForeignKey(b => b.DealCategoryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Store).WithMany(b => b.Coupons).HasForeignKey(b => b.StoreId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.DealCategory).WithMany(b => b.Coupons).HasForeignKey(b => b.DealCategoryId).OnDelete(DeleteBehavior.SetNull);
+            builder.HasOne(x => x.AffiliateSite).WithMany(b => b.Coupons).HasForeignKey(b => b.AffiliateSiteId).OnDelete(DeleteBehavior.SetNull);
 
 
         }

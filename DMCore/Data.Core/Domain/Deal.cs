@@ -77,9 +77,10 @@ namespace DMCore.Data.Core.Domain
         public string UpdatedBy { get; set; }
         public DateTime UpdatedTS { get; set; }
 
-
+        public Store Store { get; set; }
+        public long StoreId { get; set; }
         public DealCategory DealCategory { get; set; }
-        public long DealCategoryId { get; set; }
+        public long? DealCategoryId { get; set; }
 
         public DealTag DealTag { get; set; }
         public long DealTagId { get; set; }

@@ -12,12 +12,12 @@ namespace DMCore.Data.Persistance.EntityConfigurations
             builder.ToTable("Stores");
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id).HasColumnName("Id").ValueGeneratedOnAdd();            
-            builder.Property(x => x.Name).HasColumnName("Name").HasMaxLength(255).IsRequired();
-            builder.Property(x => x.StoreTips).HasColumnName("StoreTips").HasMaxLength(255).IsRequired();
-            builder.Property(x => x.Instructions).HasColumnName("Instrunctions").IsRequired();
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();            
+            builder.Property(x => x.Name).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.StoreTips).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.Instructions).IsRequired();
 
-            builder.HasOne(x => x.DealCategory).WithMany(b => b.Stores).HasForeignKey(b => b.DealCategoryId).OnDelete(DeleteBehavior.SetNull);
+            builder.HasOne(x => x.DealCategory).WithMany(b => b.Stores).HasForeignKey(b => b.DealCategoryId).OnDelete(DeleteBehavior.ClientSetNull);
 
         }
     }

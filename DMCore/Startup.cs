@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using DMCore.Data.Persistance;
 using DMCore.Data.Persistance.Repositories;
 using DMCore.Data.Core;
+using DMCore.Data;
+using System;
 
 namespace DMCore
 {
@@ -81,14 +83,20 @@ namespace DMCore
             services.AddTransient<GlobalService, GlobalService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            //services.AddTransient<DMSeedData>();
+            services.AddTransient<DMSeedData>();
 
             //services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DMSeedData seedData)
         {
             if (env.IsDevelopment())
             {
@@ -111,6 +119,8 @@ namespace DMCore
             app.UseMvc();
 
             app.UseFileServer();
+
+            seedData.EnsureSeedData().Wait();
         }
     }
 }

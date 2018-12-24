@@ -11,7 +11,7 @@
 
 2. Work with EF:
 add-migration initial -verbose
-dotnet ef migrations add InitialModel
+dotnet ef migrations add InitialModel -verbose
 dotnet ef database update
 dotnet ef migrations remove
 //dotnet ef migrations update 0 //remove prior migration (first one in this case)

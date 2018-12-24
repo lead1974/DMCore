@@ -9,7 +9,7 @@ namespace DMCore.Data.Core
 {
     public interface IUnitOfWork : IDisposable
     {
-        DMDbContext Context { get; }
+        DMDbContext _context { get; }
         IDealRepository Deals { get; }
         ICouponRepository Coupons { get; }
         IStoreRepository Stores { get; }
