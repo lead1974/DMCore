@@ -19,6 +19,10 @@ namespace DMCore
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseKestrel(options => 
+                {
+                    options.AddServerHeader = false; //remove server type from security header to minimize pin-point security attacks 
+                });
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using DMCore.Data;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +90,7 @@ namespace DMCore.Controllers
         // POST api/<controller>
         [HttpPost]
         [Produces(typeof(DealCategory))]
+        [Authorize(Policy=SD.PolicyCanManageSite)]
         public IActionResult Post([FromBody] DealCategory dealCategory)
         {
             if (!ModelState.IsValid)
@@ -102,6 +105,7 @@ namespace DMCore.Controllers
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         [Produces(typeof(DealCategory))]
+        [Authorize(Policy = SD.PolicyCanManageSite)]
         public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] DealCategory dealCategory)
         {
             long Id = (long)id;
@@ -137,6 +141,7 @@ namespace DMCore.Controllers
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         [Produces(typeof(DealCategory))]
+        [Authorize(Policy = SD.PolicyCanManageSite)]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             long Id = (long)id;

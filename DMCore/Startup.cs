@@ -14,6 +14,8 @@ using DMCore.Data.Persistance.Repositories;
 using DMCore.Data.Core;
 using DMCore.Data;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace DMCore
 {
@@ -71,8 +73,24 @@ namespace DMCore
               .AddEntityFrameworkStores<DMDbContext>()
               .AddDefaultTokenProviders();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.AccessDeniedPath = "/Home/ErrorForbidden";
+                    options.LoginPath = "/Home/ErrorNotLoggedIn";
+                });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(SD.PolicyCanManageSite, p => p.RequireAuthenticatedUser().RequireRole(SD.CanManageSite));
+            });
+
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                    options.Filters.Add(new RequireHttpsAttribute());
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddKendo();
             //services.AddAntiforgery();
@@ -81,11 +99,27 @@ namespace DMCore
             // Add application services.
             services.AddSingleton(_config);
             services.AddTransient<GlobalService, GlobalService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<DMSeedData>();
 
             //services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
+            //services.AddAuthentication().AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = "325549147934171";
+            //    facebookOptions.AppSecret = "138842076f04812382f9f7c57505720e";
+            //});
+
+            //services.AddAuthentication().AddGoogle(googleOptions =>
+            //{
+            //    googleOptions.ClientId = "609302538982-l559fa4rrjtkhlr642sn8k5gdhomu22q.apps.googleusercontent.com";
+            //    googleOptions.ClientSecret = "Q5twNVtCLCvYmNiygwG7LDsJ";
+            //});
+
+            // Register no-op EmailSender used by account confirmation and password reset during development
+            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddSession(options =>
             {
@@ -108,6 +142,17 @@ namespace DMCore
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            //security: http to https forwarding
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+            //security: https forwarding
+            app.UseHsts(options => options.MaxAge(days: 365).IncludeSubdomains());
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+            app.UseXContentTypeOptions(); //prevent attack coming back with different data than it was submitted for
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

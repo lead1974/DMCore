@@ -10,7 +10,6 @@ namespace DMCore.Data.Core.Domain
 {
     public class AuthUser : IdentityUser
     {
-        [Display(Name = "Full Name")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

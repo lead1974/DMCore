@@ -64,21 +64,26 @@ namespace DMCore.Data
 
             var roleStore = new RoleStore<AuthRole>(_unitOfWork._context);
 
-            if (!_unitOfWork._context.Roles.Any(r => r.Name == RoleName.CanManageSite))
+            if (!_unitOfWork._context.Roles.Any(r => r.Name == SD.CanManageSite))
             {
-                await roleStore.CreateAsync(new AuthRole { Name = RoleName.CanManageSite, NormalizedName = RoleName.CanManageSite, RoleName = "Site Administrator" });
+                await roleStore.CreateAsync(new AuthRole { Name = SD.CanManageSite, NormalizedName = SD.CanManageSite, RoleName = "Site Administrator" });
             }
 
             if (!_unitOfWork._context.Users.Any(u => u.UserName == user.UserName))
             {
                 var password = new PasswordHasher<AuthUser>();
                 var hashed = password.HashPassword(user, "balda1234");
+                user.FirstName = "";
+                user.LastName = "";
+                user.PhoneNumber = "";
                 user.PasswordHash = hashed;
-                await _userManager.CreateAsync(user);
-                await _userManager.AddToRoleAsync(user, RoleName.CanManageSite);
+                var result = await _userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, SD.CanManageSite);
+                }
             }
-
-            _unitOfWork.Complete();
+                _unitOfWork.Complete();
         }
 
         private async Task SeedDealCategories()
