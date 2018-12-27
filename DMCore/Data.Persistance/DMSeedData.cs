@@ -41,7 +41,7 @@ namespace DMCore.Data
 
         public async Task EnsureSeedData()
         {
-            SeedAdminUsers();
+            await SeedAdminUsers();
             await SeedDealCategories();
             //await SeedDeals();
             //await SeedCoupons();
@@ -49,41 +49,48 @@ namespace DMCore.Data
             //await SeedStores();
         }
 
-        private async void SeedAdminUsers()
+        private async Task SeedAdminUsers()
         {
             var user = new AuthUser
             {
-                UserName = "balda@balda.com",
-                NormalizedUserName = "balda@balda.com",
-                Email = "balda@balda.com",
-                NormalizedEmail = "balda@balda.com",
+                UserName = "email2lead@gmail.com",
+                NormalizedUserName = "email2lead@gmail.comm",
+                Email = "email2lead@gmail.com",
+                NormalizedEmail = "email2lead@gmail.com",
+                FirstName = "",
+                LastName = "",
+                PhoneNumber = "",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            var roleStore = new RoleStore<AuthRole>(_unitOfWork._context);
+            //Seed Roles
+            //var roleStore = new RoleStore<AuthRole>(_unitOfWork._context);
 
-            if (!_unitOfWork._context.Roles.Any(r => r.Name == SD.CanManageSite))
+            //if (!_unitOfWork._context.Roles.Any(r => r.Name == SD.CanManageSite))
+            //{
+            //    await roleStore.CreateAsync(new AuthRole { Name = SD.CanManageSite, NormalizedName = SD.CanManageSite, RoleName = "Site Administrator" });
+            //}
+            if (await _roleManager.FindByNameAsync(SD.CanManageSite) == null)
             {
-                await roleStore.CreateAsync(new AuthRole { Name = SD.CanManageSite, NormalizedName = SD.CanManageSite, RoleName = "Site Administrator" });
+                await _roleManager.CreateAsync(new AuthRole { Name = SD.CanManageSite, NormalizedName = SD.CanManageSite, RoleName = "Site Administrator" });
             }
 
-            if (!_unitOfWork._context.Users.Any(u => u.UserName == user.UserName))
+            //Seed Users
+            if (await _userManager.FindByEmailAsync(user.Email) == null)
             {
-                var password = new PasswordHasher<AuthUser>();
-                var hashed = password.HashPassword(user, "balda1234");
-                user.FirstName = "";
-                user.LastName = "";
-                user.PhoneNumber = "";
-                user.PasswordHash = hashed;
+                //var password = new PasswordHasher<AuthUser>();
+                //var hashed = password.HashPassword(user, "balda4321");
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    var password = "balda1234";
+                    await _userManager.AddPasswordAsync(user, password);
                     await _userManager.AddToRoleAsync(user, SD.CanManageSite);
                 }
             }
-                _unitOfWork.Complete();
+
         }
 
         private async Task SeedDealCategories()

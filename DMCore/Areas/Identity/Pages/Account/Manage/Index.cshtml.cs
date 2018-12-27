@@ -121,6 +121,7 @@ namespace DMCore.Areas.Identity.Pages.Account.Manage
 
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

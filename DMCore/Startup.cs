@@ -95,7 +95,8 @@ namespace DMCore
             services.AddKendo();
             //services.AddAntiforgery();
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
-
+            //email settings
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             // Add application services.
             services.AddSingleton(_config);
             services.AddTransient<GlobalService, GlobalService>();
