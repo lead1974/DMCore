@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMCore.Migrations
 {
     [DbContext(typeof(DMDbContext))]
-    [Migration("20181227003406_InitialModel")]
+    [Migration("20190106183557_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,6 +200,8 @@ namespace DMCore.Migrations
 
                     b.Property<bool>("Approved");
 
+                    b.Property<string>("CouponCode");
+
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedTS");
@@ -222,6 +224,8 @@ namespace DMCore.Migrations
 
                     b.Property<string>("Instructions")
                         .IsRequired();
+
+                    b.Property<bool>("IsCoupon");
 
                     b.Property<int>("Likes");
 
@@ -269,6 +273,8 @@ namespace DMCore.Migrations
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedTS");
+
+                    b.Property<string>("FAIcon");
 
                     b.Property<string>("Name")
                         .IsRequired()

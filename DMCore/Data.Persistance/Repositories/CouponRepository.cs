@@ -9,15 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace DMCore.Data.Persistance.Repositories
 {
-    public class DealRepository : Repository<Deal>, IDealRepository
+    public class CouponRepository : Repository<Coupon>, ICouponRepository
     {
-        public DealRepository(DMDbContext context) : base(context)
+        public CouponRepository(DMDbContext context) : base(context)
         {
         }
 
-        public IEnumerable<Deal> GetAllDealsPaging(int pageIndex, int pageSize = 20)
+        public IEnumerable<Coupon> GetAllCouponsPaging(int pageIndex, int pageSize = 20)
         {
-            return  _context.Deals
+            return  _context.Coupons
                             .Include(c => c.DealCategory)
                             .OrderByDescending(c => c.CreatedTS)
                             .Skip((pageIndex - 1) * pageSize)
@@ -25,11 +25,12 @@ namespace DMCore.Data.Persistance.Repositories
                             .ToList();
         }
 
-        public IEnumerable<Deal> GetAllPopular(int Views)
+        public IEnumerable<Coupon> GetAllPopular(int Views)
         {
-            return  _context.Deals
+            return  _context.Coupons
                        .OrderByDescending(t => t.CreatedTS)
                        .Where(s => s.Status.Equals(c.Status.Active.ToString()) && s.Views > 10 && s.Likes > 5 && s.Likes / s.Dislikes > 2).ToList();
         }
+
     }
 }

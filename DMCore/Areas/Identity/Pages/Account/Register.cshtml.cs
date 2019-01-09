@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using DMCore.Services;
+using DMCore.Data;
 
 namespace DMCore.Areas.Identity.Pages.Account
 {
@@ -16,16 +17,19 @@ namespace DMCore.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AuthUser> _signInManager;
         private readonly UserManager<AuthUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<AuthUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<AuthUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -69,6 +73,11 @@ namespace DMCore.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (!await _roleManager.RoleExistsAsync(SD.CanManageSite))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.CanManageSite));
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

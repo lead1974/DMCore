@@ -27,6 +27,8 @@ namespace DMCore.Data.Core.Domain
         public string URL { get; set; }
 
         public string Price { get; set; }
+        public bool IsCoupon { get; set; }
+        public string CouponCode { get; set; }
 
         public string ImageURL { get; set; }
 

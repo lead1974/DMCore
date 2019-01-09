@@ -198,6 +198,8 @@ namespace DMCore.Migrations
 
                     b.Property<bool>("Approved");
 
+                    b.Property<string>("CouponCode");
+
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedTS");
@@ -220,6 +222,8 @@ namespace DMCore.Migrations
 
                     b.Property<string>("Instructions")
                         .IsRequired();
+
+                    b.Property<bool>("IsCoupon");
 
                     b.Property<int>("Likes");
 
@@ -267,6 +271,8 @@ namespace DMCore.Migrations
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedTS");
+
+                    b.Property<string>("FAIcon");
 
                     b.Property<string>("Name")
                         .IsRequired()

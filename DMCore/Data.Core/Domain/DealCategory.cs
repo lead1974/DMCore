@@ -18,6 +18,7 @@ namespace DMCore.Data.Core.Domain
         public long Id { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
+        public string FAIcon { get; set; }
         public string Status { get; set; }
         public int SortSeq { get; set; }
         public bool PublicCategory { get; set; }

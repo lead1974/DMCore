@@ -9,7 +9,7 @@ namespace DMCore.Data.Core.Repositories
 {
     public interface ICouponRepository : IRepository<Coupon>
     {
-        Task<IEnumerable<Coupon>> GetAllPopular(int Views);
-        Task<IEnumerable<Coupon>> GetCouponsPaging(int pageIndex, int pageSize);
+        IEnumerable<Coupon> GetAllPopular(int Views);
+        IEnumerable<Coupon> GetAllCouponsPaging(int pageIndex, int pageSize);
     }
 }

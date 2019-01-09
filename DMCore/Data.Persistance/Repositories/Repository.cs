@@ -26,9 +26,9 @@ namespace DMCore.Data.Repositories
             return  _context.Set<TEntity>().FindAsync(Id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            return _context.Set<TEntity>().ToList();
         }
         
         public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)

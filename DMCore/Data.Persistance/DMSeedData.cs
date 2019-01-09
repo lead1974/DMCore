@@ -43,10 +43,11 @@ namespace DMCore.Data
         {
             await SeedAdminUsers();
             await SeedDealCategories();
+            //await SeedStores();
             //await SeedDeals();
             //await SeedCoupons();
             //await SeedAffiliateSites();
-            //await SeedStores();
+
         }
 
         private async Task SeedAdminUsers()
@@ -107,6 +108,7 @@ namespace DMCore.Data
                     ShortName = "Autos",
                     Status = c.Status.Active.ToString(),
                     SortSeq = 1,
+                    FAIcon="fas fa-car",
                     PublicCategory = true,
                     UpdatedTS= DateTime.UtcNow,
                     UpdatedBy="System",
@@ -120,6 +122,7 @@ namespace DMCore.Data
                     ShortName = "Entertainment",
                     Status = c.Status.Active.ToString(),
                     SortSeq = 2,
+                    FAIcon="fas fa-theater-masks",
                     PublicCategory = true,
                     UpdatedTS= DateTime.UtcNow,
                     UpdatedBy="System",
@@ -132,6 +135,7 @@ namespace DMCore.Data
                     Name = "Books & Magazines",
                     ShortName = "Books",
                     SortSeq = 2,
+                    FAIcon="fas fa-book-reader",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -145,6 +149,7 @@ namespace DMCore.Data
                     Name = "Children",
                     ShortName = "Children",
                     SortSeq = 2,
+                    FAIcon="fas fa-child",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -158,6 +163,7 @@ namespace DMCore.Data
                     Name = "Clothing & Accessories",
                     ShortName = "Apparel",
                     SortSeq = 2,
+                    FAIcon="fas fa-luggage-cart",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -171,6 +177,7 @@ namespace DMCore.Data
                     Name = "Computers & Accessories",
                     ShortName = "Computers",
                     SortSeq = 2,
+                    FAIcon ="fas fa-laptop-code",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -184,6 +191,7 @@ namespace DMCore.Data
                     Name = "Education",
                     ShortName = "Education",
                     SortSeq = 2,
+                    FAIcon="fas fa-user-graduate",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -197,6 +205,7 @@ namespace DMCore.Data
                     Name = "Credit Cards",
                     ShortName = "Finance",
                     SortSeq = 2,
+                    FAIcon="fas fa-piggy-bank",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -210,6 +219,7 @@ namespace DMCore.Data
                     Name = "Flowers & Gifts",
                     ShortName = "Flowers",
                     SortSeq = 2,
+                    FAIcon="fas fa-gift",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -223,6 +233,7 @@ namespace DMCore.Data
                     Name = "Freebies",
                     ShortName = "Freebies",
                     SortSeq = 2,
+                    FAIcon="fas fa-hand-holding-usd",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -236,6 +247,7 @@ namespace DMCore.Data
                     Name = "Grocery",
                     ShortName = "Grocery",
                     SortSeq = 2,
+                    FAIcon="fas fa-shopping-cart",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -250,6 +262,7 @@ namespace DMCore.Data
                     Name = "Health & Beauty",
                     ShortName = "Health",
                     SortSeq = 2,
+                    FAIcon="fas fa-medkit",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -263,6 +276,7 @@ namespace DMCore.Data
                     Name = "Home & Home Improvement",
                     ShortName = "Home",
                     SortSeq = 2,
+                    FAIcon="fas fa-home",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -276,6 +290,7 @@ namespace DMCore.Data
                     Name = "Jewerly & Watches",
                     ShortName = "Jewerly",
                     SortSeq = 2,
+                    FAIcon="far fa-clock",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -290,6 +305,7 @@ namespace DMCore.Data
                     Name = "Office & School Supplies",
                     ShortName = "Office",
                     SortSeq = 2,
+                    FAIcon="far fa-clipboard",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -303,6 +319,7 @@ namespace DMCore.Data
                     Name = "Pets",
                     ShortName = "Pets",
                     SortSeq = 2,
+                    FAIcon="fas fa-paw",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -316,6 +333,7 @@ namespace DMCore.Data
                     Name = "Phones & Accessories",
                     ShortName = "Phones",
                     SortSeq = 2,
+                    FAIcon="fas fa-phone",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -329,6 +347,7 @@ namespace DMCore.Data
                     Name = "Restaurants",
                     ShortName = "Restaurants",
                     SortSeq = 2,
+                    FAIcon="fas fa-wine-bottle",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -342,6 +361,7 @@ namespace DMCore.Data
                     Name = "Services",
                     ShortName = "Services",
                     SortSeq = 2,
+                    FAIcon="fas fa-shipping-fast",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -354,6 +374,7 @@ namespace DMCore.Data
                     Name = "Shoes",
                     ShortName = "Shoes",
                     SortSeq = 2,
+                    FAIcon="fas fa-shoe-prints",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -367,6 +388,7 @@ namespace DMCore.Data
                     Name = "Sports & Outdoors",
                     ShortName = "Sports",
                     SortSeq = 2,
+                    FAIcon="fas fa-football-ball",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -380,6 +402,7 @@ namespace DMCore.Data
                     Name = "Tech & Electronics",
                     ShortName = "Electronics",
                     SortSeq = 2,
+                    FAIcon="fab fa-android",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -393,6 +416,7 @@ namespace DMCore.Data
                     Name = "Toys",
                     ShortName = "Toys",
                     SortSeq = 2,
+                    FAIcon="fas fa-dove",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -406,6 +430,7 @@ namespace DMCore.Data
                     Name = "Travel and Vacations",
                     ShortName = "Travel",
                     SortSeq = 2,
+                    FAIcon="fas fa-umbrella-beach",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -419,6 +444,7 @@ namespace DMCore.Data
                     Name = "Other",
                     ShortName = "Other",
                     SortSeq = 999,
+                    FAIcon="fas fa-yin-yang",
                     PublicCategory = true,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -432,6 +458,7 @@ namespace DMCore.Data
                     Name = "General Store",
                     ShortName = "General",
                     SortSeq = 888,
+                    FAIcon="fas fa-shopping-cart",
                     PublicCategory = false,
                     Status = c.Status.Active.ToString(),
                     UpdatedTS= DateTime.UtcNow,
@@ -442,6 +469,75 @@ namespace DMCore.Data
             };
 
                 _unitOfWork.DealCategories.AddRange(dCategories);
+                _unitOfWork.Complete();
+            }
+        }
+
+        private async Task SeedStores()
+        {
+            int storesCount = await _unitOfWork.Stores.GetCount();
+
+            if (storesCount == 0)
+            {
+                var stores = new Store[] {
+                new Store
+                {
+
+                    Name = "Amazon",
+                    Domain="amazon.com",
+                    Instructions="",
+                    StoreTips="",
+                    UpdatedTS= DateTime.UtcNow,
+                    UpdatedBy="System",
+                    CreatedTS= DateTime.UtcNow,
+                    CreatedBy="System"
+                },
+            };
+
+                _unitOfWork.Stores.AddRange(stores);
+                _unitOfWork.Complete();
+            }
+        }
+        private async Task SeedDeals()
+        {
+            int dealsCount = await _unitOfWork.Deals.GetCount();
+
+            if (dealsCount == 0)
+            {
+                var deals = new Deal[] {
+                new Deal
+                {
+
+                    UpdatedTS= DateTime.UtcNow,
+                    UpdatedBy="System",
+                    CreatedTS= DateTime.UtcNow,
+                    CreatedBy="System"
+                },
+            };
+
+                _unitOfWork.Deals.AddRange(deals);
+                _unitOfWork.Complete();
+            }
+        }
+
+        private async Task SeedCoupons()
+        {
+            int couponsCount = await _unitOfWork.Coupons.GetCount();
+
+            if (couponsCount == 0)
+            {
+                var coupons = new Coupon[] {
+                new Coupon
+                {
+
+                    UpdatedTS= DateTime.UtcNow,
+                    UpdatedBy="System",
+                    CreatedTS= DateTime.UtcNow,
+                    CreatedBy="System"
+                },
+            };
+
+                _unitOfWork.Coupons.AddRange(coupons);
                 _unitOfWork.Complete();
             }
         }

@@ -19,3 +19,4 @@ dotnet ef migrations remove
 dotnet ef migrations add ApplyConstraints
 dotnet ef database update
 
+npm install --save-dev @fortawesome/fontawesome-free

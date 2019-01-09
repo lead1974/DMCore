@@ -9,7 +9,7 @@ namespace DMCore.Data.Core.Repositories
 {
     public interface IDealRepository : IRepository<Deal>
     {
-        Task<IEnumerable<Deal>> GetAllPopular(int Views);
-        Task<IEnumerable<Deal>> GetAllDealsPaging(int pageIndex, int pageSize);
+        IEnumerable<Deal> GetAllPopular(int Views);
+        IEnumerable<Deal> GetAllDealsPaging(int pageIndex, int pageSize);
     }
 }
