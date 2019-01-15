@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DMCore.Data.Core.Domain;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -64,6 +65,19 @@ namespace DMCore.Areas.Identity.Pages.Account.Manage
             {
                 return RedirectToPage("./SetPassword");
             }
+
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "My Account",
+                Url = "/Identity/Account/Manage",
+                Order = 1
+            });
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "Change My Password",
+                Url = "/Identity/Account/Manage/ChangePassword",
+                Order = 2
+            });
 
             return Page();
         }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DMCore.Data.Core.Domain;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -27,6 +28,19 @@ namespace DMCore.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "My Account",
+                Url = "/Identity/Account/Manage",
+                Order = 1
+            });
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "My Personal Data",
+                Url = "/Identity/Account/Manage/PersonalData",
+                Order = 2
+            });
 
             return Page();
         }

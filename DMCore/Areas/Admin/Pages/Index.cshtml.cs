@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -22,6 +23,14 @@ namespace DMCore.Areas.Admin.Pages
         {
 
             dcList = _unitOfWork.DealCategories.GetAll().ToList();
+
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "Site Administration",
+                Url = "/admin",
+                Order = 1
+            });
+
         }
     }
 }

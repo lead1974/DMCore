@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using DMCore.Data.Core.Domain;
 using DMCore.Services;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -80,6 +81,20 @@ namespace DMCore.Areas.Identity.Pages.Account.Manage
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "My Account",
+                Url = "/Identity/Account/Manage",
+                Order = 1
+            });
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "My Profile",
+                Url = "/Identity/Account/Manage/Profile",
+                Order = 2
+            });
+
 
             return Page();
         }

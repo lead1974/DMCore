@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DMCore.Pages.Blog
@@ -12,6 +8,14 @@ namespace DMCore.Pages.Blog
         public void OnGet()
         {
             ViewData["Title"] = "Blog";
+
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "Blog",
+                Url = "/blog",
+                Order = 2
+            });
+
         }
     }
 }

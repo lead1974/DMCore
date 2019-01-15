@@ -6,12 +6,14 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using DMCore.Data.Core.Domain;
 using DMCore.Services;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DMCore.Areas.Identity.Pages.Account.Manage
 {
+    [BreadCrumb(Title = "My Account", UseDefaultRouteUrl = true, Order = 0)]
     public partial class IndexModel : PageModel
     {
         private readonly UserManager<AuthUser> _userManager;
@@ -53,6 +55,18 @@ namespace DMCore.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+        }
+
+        public void OnGet()
+        {
+
+            this.AddBreadCrumb(new BreadCrumb
+            {
+                Title = "My Account",
+                Url = "/Identity/Account/Manage",
+                Order = 1
+            });
+
         }
 
     }

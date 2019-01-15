@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="DNTBreadCrumb.Core" Version="1.7.2" />
     <PackageReference Include="KendoUICore" Version="2018.3.1017" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
@@ -18,10 +19,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
     <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2018.3.1017" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Account\" />
   </ItemGroup>
 
 </Project>

@@ -43,9 +43,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" asp-page="/Index"><img src="~/images/logo.png" alt="logo"></a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="~/images/logo.png" alt="logo"></a>
             </div>
             <div class="navbar-collapse collapse">
+                Site Administration
                 @*<ul class="nav navbar-nav">
                     <li><a asp-page="/Index">Home</a></li>
                     <li><a asp-page="/About">About</a></li>
@@ -54,6 +55,10 @@
             </div>
         </div>
     </nav>
+    <breadcrumb asp-homepage-title="Site Administration"
+                asp-homepage-url="/admin"
+                asp-bootstrap-version="V4"
+                asp-homepage-glyphicon="glyphicon glyphicon-home"></breadcrumb>
     <div class="container body-content">
         @RenderBody()
         <hr />
