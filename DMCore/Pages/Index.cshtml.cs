@@ -3,6 +3,9 @@ using System.Linq;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
 using DNTBreadCrumb.Core;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DMCore.Pages
@@ -29,6 +32,11 @@ namespace DMCore.Pages
                 Order = 1
             });
 
+        }
+        public JsonResult OnPostRead([DataSourceRequest] DataSourceRequest request)
+        {
+            dcList = _unitOfWork.DealCategories.GetAll().ToList();
+            return new JsonResult(dcList.ToDataSourceResult(request));
         }
     }
 }

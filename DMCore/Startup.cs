@@ -14,6 +14,7 @@ using DMCore.Data;
 using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
+using Newtonsoft.Json.Serialization;
 
 namespace DMCore
 {
@@ -78,6 +79,13 @@ namespace DMCore
                     options.LoginPath = "/Home/ErrorNotLoggedIn";
                 });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(SD.PolicyCanManageSite, p => p.RequireAuthenticatedUser().RequireRole(SD.CanManageSite));
@@ -88,7 +96,9 @@ namespace DMCore
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     options.Filters.Add(new RequireHttpsAttribute());
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                
 
             services.AddKendo();
             //services.AddAntiforgery();

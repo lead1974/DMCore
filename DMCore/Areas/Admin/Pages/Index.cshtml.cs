@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DMCore.Data;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
 using DNTBreadCrumb.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DMCore.Areas.Admin.Pages
 {
+    [Authorize(Policy = SD.PolicyCanManageSite)]
     public class IndexModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;

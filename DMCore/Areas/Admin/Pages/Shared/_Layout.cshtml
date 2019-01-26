@@ -7,26 +7,35 @@
     <meta name="author" content="">
     <title>@ViewData["Title"] | @configuration.GetSection("SiteSettings")["SiteName"]</title>
 
+    @{
+        string kendoVersion = "2018.3.1017";
+        string fontawesomeVersion = "v5.6.3";
+    }
+
     <link href="~/css/main.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/kendo-ui/styles/kendo.default.min.css" rel="stylesheet" />
-    <link href="~/lib/kendo-ui/styles/kendo.default.mobile.min.css" rel="stylesheet" />
-    <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" />
-    <link href="~/lib/kendo-ui/styles/kendo.common-bootstrap.min.css" rel="stylesheet" />
 
-    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" rel="stylesheet">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/@kendoVersion/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/@kendoVersion/styles/kendo.bootstrap.min.css" />
+
+    <link href="https://use.fontawesome.com/releases/@fontawesomeVersion/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" rel="stylesheet">
     <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/lib/prettyPhoto/css/prettyPhoto.min.css" rel="stylesheet" />
     <link href="~/lib/animate/animate.min.css" rel="stylesheet" />
 
-    <script src="~/lib/kendo-ui/js/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            crossorigin="anonymous"
+            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+    </script>
     <script src="~/lib/jquery/dist/jquery.isotope.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 
-    <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
-    <script src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
-    <script src="~/lib/kendo-ui/js/kendo.core.min.js"></script>
-    <script src="~/lib/kendo-ui/js/kendo.mobile.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/@kendoVersion/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/@kendoVersion/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/@kendoVersion/js/kendo.aspnetmvc.min.js"></script>
+
 
     <script src="~/lib/prettyPhoto/js/jquery.prettyPhoto.min.js"></script>
     <script src="~/js/html5shiv.js"></script>

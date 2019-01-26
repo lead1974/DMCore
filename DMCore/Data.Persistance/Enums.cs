@@ -17,7 +17,7 @@ namespace DMCore.Data
 
         public enum Views
         {
-            Popular0,
+            Popular,
             Active,
             Expired
         }
