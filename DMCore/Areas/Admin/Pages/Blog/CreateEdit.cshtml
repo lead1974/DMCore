@@ -1,0 +1,21 @@
+﻿@page
+@model DMCore.Areas.Admin.Pages.Blog.CreateEditModel
+@{
+}
+<div class="panel-heading">
+    <h3 class="panel-title">
+        @{
+            var postId = Model.postId;
+            string display = Model.pagetype == "view" ? "disabled" : "enabled";
+            bool newPost = false;
+            if (Model.postId > 0)
+            { <i>Edit Blog Post Details for post Id </i> <strong> @Model.postId.ToString() </strong>}
+            else
+            {
+                newPost = true;
+            <i>New Blog Post </i>
+        }
+        }
+    </h3>
+</div>
+<hr />

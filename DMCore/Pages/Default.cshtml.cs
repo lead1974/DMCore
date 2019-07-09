@@ -1,3 +1,5 @@
+﻿using System.Collections.Generic;
+using System.Linq;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
 using DMCore.Data.Core.Domain.Deal;
@@ -6,12 +8,10 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace DMCore.Areas.Admin.Pages.DealCategories
+namespace DMCore.Pages
 {
+    [BreadCrumb(Title = "Home", UseDefaultRouteUrl = true, Order = 0)]
     public class IndexModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -28,8 +28,8 @@ namespace DMCore.Areas.Admin.Pages.DealCategories
             dcList = _unitOfWork.DealCategories.GetAll().ToList();
             this.AddBreadCrumb(new BreadCrumb
             {
-                Title = "Home",
-                Url = "/index",
+                Title = "Home",                 
+                Url = "/Default",
                 Order = 1
             });
 

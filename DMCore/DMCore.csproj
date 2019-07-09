@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="DNTBreadCrumb.Core" Version="1.7.2" />
-    <PackageReference Include="KendoUICore" Version="2018.3.1017" />
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="DNTBreadCrumb.Core" Version="1.8.0" />
+    <PackageReference Include="KendoUICore" Version="2019.2.619" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
@@ -18,7 +18,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
-    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2018.3.1017" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2019.1.115" />
+    <PackageReference Include="Wangkanai.Detection" Version="2.0.0-beta10" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DMCore.Data;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
+using DMCore.Data.Core.Domain.Deal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

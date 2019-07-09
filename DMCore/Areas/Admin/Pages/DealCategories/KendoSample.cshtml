@@ -1,0 +1,51 @@
+﻿@page
+@model DMCore.Areas.Admin.Pages.DealCategories.IndexModel
+@{
+    ViewData["Title"] = "Manage Deal Categories";
+}
+
+@using DMCore.Data.Core.Domain
+@using Kendo.Mvc.UI
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@Html.AntiForgeryToken()
+
+<h2>Deal Categories</h2>
+
+@(Html.Kendo().Grid<DealCategory>().Name("grid")
+                            .Groupable()
+                            .Sortable()
+                            .Editable()
+                            .Scrollable()
+                            .ToolBar(x => { x.Excel(); x.Create(); })
+                            .Columns(columns =>
+                            {
+                                columns.Bound(column => column.Name);
+                                columns.Bound(column => column.ShortName);
+                                columns.Bound(column => column.SortSeq);
+                                columns.Command(column =>
+                                {
+                                    column.Edit();
+                                    column.Destroy();
+                                });
+                            })
+                         .Excel(excel => excel
+                                    .FileName("Export.xlsx")
+                                    .Filterable(true)
+                                    .ProxyURL("/Admin/DealCategories/Index?handler=Save")
+                                )
+                        .DataSource(ds => ds.Ajax()
+                               .Read(r => r.Url("/Admin/DealCategories/Index?handler=Read").Data("forgeryToken"))
+                               .Update(u => u.Url("/Admin/DealCategories/Index?handler=Update").Data("forgeryToken"))
+                               .Create(c => c.Url("/Admin/DealCategories/Index?handler=Create").Data("forgeryToken"))
+                               .Destroy(d => d.Url("/Admin/DealCategories/Index?handler=Destroy").Data("forgeryToken"))
+                               .Model(m => m.Id(id => id.Id))
+                            .PageSize(10)
+                        )
+                        .Pageable()
+)
+<script>
+    function forgeryToken() {
+        return kendo.antiForgeryTokens();
+    }
+</script>

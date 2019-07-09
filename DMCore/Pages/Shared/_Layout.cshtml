@@ -7,23 +7,18 @@
     <meta name="author" content="">
     <title>@ViewData["Title"] | @configuration.GetSection("SiteSettings")["SiteName"]</title>
 
-    @{
-        string kendoVersion = "2018.3.1017";
-        string fontawesomeVersion = "v5.6.3";
-    }
-
     <link href="~/css/main.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/@kendoVersion/styles/kendo.common-nova.min.css" />
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/@kendoVersion/styles/kendo.nova.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/@configuration.GetSection("VersionSettings")["kendo"]/styles/kendo.common-nova.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/@configuration.GetSection("VersionSettings")["kendo"]/styles/kendo.nova.min.css" />
 
-    <link href="https://use.fontawesome.com/releases/@fontawesomeVersion/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/@configuration.GetSection("VersionSettings")["fontawesome"]/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" rel="stylesheet">
     <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/lib/prettyPhoto/css/prettyPhoto.min.css" rel="stylesheet" />
     <link href="~/lib/animate/animate.min.css" rel="stylesheet" />
 
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/@configuration.GetSection("VersionSettings")["jQuery"]"
             asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
             asp-fallback-test="window.jQuery"
             crossorigin="anonymous"
@@ -32,9 +27,9 @@
     <script src="~/lib/jquery/dist/jquery.isotope.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 
-    <script src="https://kendo.cdn.telerik.com/@kendoVersion/js/jszip.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/@kendoVersion/js/kendo.all.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/@kendoVersion/js/kendo.aspnetmvc.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/@configuration.GetSection("VersionSettings")["kendo"]/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/@configuration.GetSection("VersionSettings")["kendo"]/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/@configuration.GetSection("VersionSettings")["kendo"]/js/kendo.aspnetmvc.min.js"></script>
 
 
     <script src="~/lib/prettyPhoto/js/jquery.prettyPhoto.min.js"></script>
@@ -61,14 +56,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="~/index"><img src="~/images/logo.png" alt="logo"></a>
+                <a class="navbar-brand" href="/Default"><img src="~/images/logo.png" alt="logo"></a>
             </div>
             <div class="collapse navbar-collapse">
 
                 <div class="collapse navbar-collapse">
                     <br />
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a href="~/index">Deals</a></li>
+                        <li class="active"><a href="/Default">Deals</a></li>
                         @*<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Deals<i class="glyphicon glyphicon-arrow-down"></i></a>
                             <ul class="dropdown-menu">
@@ -121,7 +116,7 @@
             </div>
         </section>/#title*@
     <breadcrumb asp-homepage-title="Home"
-                asp-homepage-url="/index"                
+                asp-homepage-url="/Default"                
                 asp-bootstrap-version="V4"
                 asp-homepage-glyphicon="glyphicon glyphicon-home"></breadcrumb>
     <section id="portfolio" class="container">
@@ -208,7 +203,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; @DateTime.Now.Year <a target="_blank" href="http://DealsMo.com/" title="Free Deals Daily and More">@configuration.GetSection("SiteSettings")["SiteDomain"]</a>. All Rights Reserved.
+                    &copy; @DateTime.Now.Year <a target="_blank" href=@configuration.GetSection("SiteSettings")["SiteDomainURL"] title="Free Deals Daily and More">@configuration.GetSection("SiteSettings")["SiteDomain"]</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">

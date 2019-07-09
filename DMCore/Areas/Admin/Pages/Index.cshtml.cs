@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DMCore.Data;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
+using DMCore.Data.Core.Domain.Deal;
 using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

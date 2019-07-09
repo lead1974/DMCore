@@ -55,8 +55,10 @@ namespace DMCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<DMDbContext>(options =>
-                   options.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = DMDB; Trusted_Connection = True; MultipleActiveResultSets = true"));
+            services.AddDbContext<DMDbContext>
+                  (context => { context.UseInMemoryDatabase("DMDB"); });
+            //services.AddDbContext<DMDbContext>(options =>
+            //       options.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = DMDB; Trusted_Connection = True; MultipleActiveResultSets = true"));
             //options.UseSqlServer(Configuration.GetSection("ConnectionString")["DefaultConnection"]));
 
             services.AddIdentity<AuthUser, AuthRole>(options =>
@@ -91,14 +93,25 @@ namespace DMCore
                 options.AddPolicy(SD.PolicyCanManageSite, p => p.RequireAuthenticatedUser().RequireRole(SD.CanManageSite));
             });
 
+            services.AddDetection();
+
             services.AddMvc(options =>
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     options.Filters.Add(new RequireHttpsAttribute());
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-                
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; //Ticket with Telerik 1397925
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                })
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddPageRoute("/DetectDevice", "");
+                });
+
 
             services.AddKendo();
             //services.AddAntiforgery();
