@@ -46,7 +46,6 @@ namespace DMCore.Pages.Deals
             _unitOfWork.Complete();
 
             return RedirectToPage("/Default");
-
         }
     }
 }
