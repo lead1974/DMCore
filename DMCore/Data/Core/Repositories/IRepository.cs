@@ -9,12 +9,12 @@ namespace DMCore.Data.Core.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> Get(long Id);
+        TEntity Get(long Id);
         IEnumerable<TEntity> GetAll();
-        Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         // This method was not in the videos, but I thought it would be useful to add.
-        Task<TEntity> SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);

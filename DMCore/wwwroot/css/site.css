@@ -35,3 +35,12 @@ body {
         display: none;
     }
 }
+.deal-row {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.deal-row-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+

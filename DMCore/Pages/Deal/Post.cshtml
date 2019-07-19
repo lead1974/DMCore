@@ -1,0 +1,73 @@
+﻿@page
+@model DMCore.Pages.Deals.PostModel
+@{
+    ViewData["Title"] = "Post New Deal";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
+    var deal = Model.deal;
+
+}
+
+<section id="post-deal-page" class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h4>Post a Deal</h4>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form id="post-deal-form" name="post-deal-form" method="post" role="form">
+                <div class="row" style="margin:10px;">
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.URL" type="text" class="form-control" required="required" placeholder="Deal URL" />
+                        </div>
+                        <span asp-validation-for="deal.URL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.ImageURL" type="text" class="form-control" required="required" placeholder="Image URL" />
+                        </div>
+                        <span asp-validation-for="deal.ImageURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.Title" type="text" class="form-control" required="required" placeholder="Title" />
+                        </div>
+                        <span asp-validation-for="deal.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.Price" type="number" class="form-control" required="required" placeholder="Price" />
+                        </div>
+                        <span asp-validation-for="deal.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.Instructions" type="text" class="form-control" required="required" placeholder="Instructions" />
+                        </div>
+                        <span asp-validation-for="deal.Instructions" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.DealCategoryId" type="text" class="form-control" required="required" placeholder="Category" />
+                        </div>
+                        <span asp-validation-for="deal.DealCategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input asp-for="deal.StoreId" type="text" class="form-control" placeholder="Store" />
+                        </div>
+                        <span asp-validation-for="deal.StoreId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg" value="Post My Deal!">Post My Deal!</button> 
+                            <a asp-page="/Default" class="btn btn-sm btn-success">Back to Deals</a>
+</div>
+                </div>
+</form>
+        </div><!--/.col-sm-8-->
+        <div class="col-sm-4">
+            <h4>Instructions</h4>
+        </div>
+    </div>
+</section><!--/#post-deal-page-->

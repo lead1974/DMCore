@@ -1,9 +1,12 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using DMCore.Data;
 using DMCore.Data.Core;
 using DMCore.Data.Core.Domain;
 using DMCore.Data.Core.Domain.Deal;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +18,8 @@ namespace DMCore.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ApiController]
+    //[Authorize(Policy = SD.PolicyCanManageSite)]
     public class DealCategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -41,124 +46,175 @@ namespace DMCore.Controllers
             return await _unitOfWork.Deals.Exist(id);
         }
 
+        private async Task<bool> CategoryExists(long id)
+        {
+            return await _unitOfWork.DealCategories.Exist(id);
+        }
 
         // GET: api/<controller>
         [HttpGet]
+        [Route("[action]")]
         [Produces(typeof(DbSet<DealCategory>))]
-        public IActionResult GetAll()
+        public IActionResult GetAllCategories([DataSourceRequest]DataSourceRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var results = new ObjectResult(_unitOfWork.DealCategories.GetAll())
-            {
-                StatusCode = (int)HttpStatusCode.OK
-            };
-
-            if (results == null)
+            var categories = _unitOfWork.DealCategories.GetAll();
+            if (categories == null)
             {
                 return NotFound();
             }
             Request.HttpContext.Response.Headers.Add("X-Total-Count", _unitOfWork.DealCategories.GetCount().ToString());
 
-            return results;
+            return new JsonResult(categories.ToDataSourceResult(request));
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        [Produces(typeof(DealCategory))]
-        public async Task<IActionResult> GetById(int id)
+        [Route("[action]")]
+        [Produces(typeof(DbSet<DealCategory>))]
+        public ActionResult<DealCategory> GetCategoryByID([FromRoute] int id)
         {
-            long Id = (long)id;
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var dealCategory = await _unitOfWork.DealCategories.Find(d=> d.Id==Id);
-
-            if (dealCategory == null)
+            var category = _unitOfWork.DealCategories.SingleOrDefault(c => c.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return Ok(dealCategory);
+            return Ok(category);
         }
 
-        // POST api/<controller>
         [HttpPost]
-        [Produces(typeof(DealCategory))]
-        [Authorize(Policy=SD.PolicyCanManageSite)]
-        public IActionResult Post([FromBody] DealCategory dealCategory)
+        [Route("[action]")]
+        public IActionResult CreateCategory([DataSourceRequest]DataSourceRequest request, [FromForm]DealCategory category)
         {
+
+            //return new ObjectResult(new DataSourceResult { Data = new[] { category }, Total = 1 });
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _unitOfWork.DealCategories.Add(dealCategory);
-            return CreatedAtAction("FindById", new { id = dealCategory.Id }, dealCategory);
+            if (category != null && ModelState.IsValid)
+            {
+                try
+                {
+                    var categoryToAdd = new DealCategory
+                    {
+                        Name = category.Name,
+                        ShortName = category.ShortName,
+                        SortSeq = category.SortSeq,
+                        PublicCategory = category.PublicCategory,
+                        Status = c.Status.Active.ToString(),
+                        UpdatedTS = DateTime.UtcNow,
+                        UpdatedBy = User.Identity.Name,
+                        CreatedTS = DateTime.UtcNow,
+                        CreatedBy = User.Identity.Name
+
+                    };
+
+
+                    _unitOfWork.DealCategories.Add(categoryToAdd);
+                    _unitOfWork.Complete();
+                    return Json(new[] { categoryToAdd }.ToDataSourceResult(request, ModelState));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                    {
+                        return BadRequest();
+                    }
+                }
+
+            }
+            return CreatedAtAction(nameof(GetCategoryByID), new { id = category.Id }, category);
         }
 
-        // PUT api/<controller>/5
         [HttpPut("{id}")]
-        [Produces(typeof(DealCategory))]
-        [Authorize(Policy = SD.PolicyCanManageSite)]
-        public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] DealCategory dealCategory)
+        [Route("[action]")]
+        public async Task<IActionResult> UpdateCategory([DataSourceRequest]DataSourceRequest request, [FromForm]DealCategory category)
         {
-            long Id = (long)id;
-
+            //return new StatusCodeResult(200);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (Id != dealCategory.Id)
+            if (category == null || category.Id == 0)
             {
                 return BadRequest();
             }
 
-            try
+            if (category != null && ModelState.IsValid)
             {
-                _unitOfWork.DealCategories.Update(dealCategory);
-                return Ok(dealCategory);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await Exists(Id))
+                var categoryToUpdate = _unitOfWork.DealCategories.SingleOrDefault(c => c.Id == category.Id);
+                categoryToUpdate.Name = category.Name;
+                categoryToUpdate.ShortName = category.ShortName;
+                categoryToUpdate.SortSeq = category.SortSeq;
+                categoryToUpdate.PublicCategory = category.PublicCategory;
+                categoryToUpdate.UpdatedTS = DateTime.UtcNow;
+                categoryToUpdate.UpdatedBy = User.Identity.Name.Substring(13);
+                try
                 {
-                    return NotFound();
+                    _unitOfWork.DealCategories.Update(categoryToUpdate);
+                    _unitOfWork.Complete();
+                    return Ok(category);
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!await CategoryExists(category.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
             }
+            return new JsonResult(ModelState.IsValid ? true : ModelState.ToDataSourceResult());
         }
 
-        // DELETE api/<controller>/5
+
         [HttpDelete("{id}")]
-        [Produces(typeof(DealCategory))]
-        [Authorize(Policy = SD.PolicyCanManageSite)]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public IActionResult DeleteCategory(long id)
         {
-            long Id = (long)id;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!await Exists(Id))
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var categoryToDelete = _unitOfWork.DealCategories.SingleOrDefault(c => c.Id == id);
+
+                if (categoryToDelete == null) return BadRequest();
+
+                categoryToDelete.Name = categoryToDelete.Name + " (Suspended)";
+                categoryToDelete.Status = c.Status.Deleted.ToString();
+                categoryToDelete.UpdatedTS = DateTime.UtcNow;
+                categoryToDelete.UpdatedBy = User.Identity.Name.Substring(13);
+
+                _unitOfWork.DealCategories.Update(categoryToDelete);
+                _unitOfWork.Complete();
             }
-            
-            _unitOfWork.DealCategories.Remove(id);
+            else
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
+
     }
 }

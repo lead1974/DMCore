@@ -34,6 +34,11 @@ namespace DMCore.Pages
             });
 
         }
+
+        public IActionResult OnPostDeal()
+        {
+            return RedirectToPage("/Deals/Create");
+        }
         //public JsonResult OnPostRead([DataSourceRequest] DataSourceRequest request)
         //{
         //    dcList = _unitOfWork.DealCategories.GetAll().ToList();

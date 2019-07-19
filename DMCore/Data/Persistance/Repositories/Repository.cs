@@ -21,9 +21,9 @@ namespace DMCore.Data.Repositories
         }
 
 
-        public Task<TEntity> Get(long Id)
+        public TEntity Get(long Id)
         {
-            return  _context.Set<TEntity>().FindAsync(Id);
+            return  _context.Set<TEntity>().Find(Id);
         }
 
         public IEnumerable<TEntity> GetAll()
@@ -31,9 +31,9 @@ namespace DMCore.Data.Repositories
             return _context.Set<TEntity>().ToList();
         }
         
-        public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+            return _context.Set<TEntity>().Where(predicate).ToList();
         }
         public async Task<int> GetCount()
         {
@@ -44,9 +44,9 @@ namespace DMCore.Data.Repositories
         {
             return await _context.Set<TEntity>().FindAsync(id) != null;
         }
-        public async Task<TEntity> SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+            return _context.Set<TEntity>().SingleOrDefault(predicate);
         }
         public async void Add(TEntity entity)
         {

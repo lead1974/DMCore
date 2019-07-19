@@ -15,12 +15,16 @@ namespace DMCore.Data.Core.Domain.Deal
             Deals = new HashSet<Deal>();
             Coupons = new HashSet<Coupon>();
         }
+        [ScaffoldColumn(false)]
         public long Id { get; set; }
+        [Display(Name = "Category Name")]
         public string Name { get; set; }
+        [Display(Name = "Category Short Name")]
         public string ShortName { get; set; }
         public string FAIcon { get; set; }
         public string Status { get; set; }
         public int SortSeq { get; set; }
+        [Display(Name = "Is Category Public")]
         public bool PublicCategory { get; set; }
 
         public string CreatedBy { get; set; }

@@ -1,120 +1,84 @@
 ﻿@page
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @model DMCore.Areas.Admin.Pages.DealCategories.IndexModel
 @{
     ViewData["Title"] = "Manage Deal Categories";
 }
 
-@using DMCore.Data.Core.Domain
-@using Kendo.Mvc.UI
+<h2>Manage Deal Categories</h2>
+<hr />
+<section class="container">
 
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
-@Html.AntiForgeryToken()
+    <div class="col-lg-12">
+        <input class="k-textbox" id="searchCateg" placeholder="Search data..." /> <i>Minimum 3 charachters required to trigger search function</i>
+        <hr />
+        @(Html.Kendo().Grid<DealCategory>()
+                                .Name("gridCateg")
+                                .Columns(columns =>
+                                {
+                            //columns.Bound(p => p.FirstName).ClientTemplate("<a href='" + @Url.Action("About", "Home") + "/#=CustomerId#'>View</a>");
+                            columns.Bound(p => p.Id).Filterable(false);
+                                    columns.Bound(p => p.Name).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                    columns.Bound(p => p.ShortName).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                    columns.Bound(p => p.SortSeq).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                    columns.Bound(p => p.PublicCategory).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                    columns.Bound(p => p.Status).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                    columns.Command(command =>
+                                    {
+                                        command.Edit();
+                                        command.Destroy();
+                                    }).Width(250); //
+                        })
+                                .ToolBar(tools =>
+                                {
+                                    tools.Create();
+                                    tools.Excel();
+                                })
+                                .Editable(editable => editable.Mode(GridEditMode.InLine))
+                                .Sortable()
+                                .Pageable()
+                                .Filterable()
+                                .DataSource(datasource =>
+                                            datasource
+                                            .WebApi()
+                                            .Model(model =>
+                                            {
+                                                model.Id(c => c.Id);
+                                            })
+                                //.Categ(Categ => Categ.Error("error_handler"))
+                                .Read(read => read.Action("GetAllCategories", "DealCategory"))
+                                .Create(create => create.Action("CreateCategory", "DealCategory"))
+                                .Update(update => update.Action("UpdateCategory", "DealCategory", new { id = "{0}" }))
+                                .Destroy(destroy => destroy.Action("DeleteCategory", "DealCategory", new { id = "{0}" }))
+                                .PageSize(10)
+                                )
 
-<h2>Deal Categories</h2>
-<br />
-<input class="k-textbox" id="searchCategories" /> <i>Minimum 3 charachters required to trigger search function</i>
-<br />
-<p>
-    <table id="gridCategories">
-        <colgroup>
-            <col style="width:100px" />
-            <col style="width:100px" />
-            <col style="width:100px" />
-            <col style="width:100px" />
-            <col style="width:100px" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th data-field="name">
-                    Name
-                </th>
-                <th data-field="shortname">
-                    Short Name
-                </th>
-                <th data-field="sortseq">
-                    Sort Sequence
-                </th>
-                <th data-field="publiccategory">
-                    Public Category
-                </th>
-                <th data-field="buttons"></th>
-            </tr>
-        </thead>
-        <tbody>
+        )
+    </div>
+</section>
+                                                                              <script>
 
-            @foreach (var item in Model.dcList)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(m => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.ShortName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.SortSeq)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.PublicCategory)
-                    </td>
-                    <td>
-                        @*@Html.Partial("_TableButtonsPartial", new IndividualButtonPartial { Id = item.Id })*@
-                    </td>
-                </tr>
-            }
+                                                                                  $(document).ready(function () {
 
-        </tbody>
-    </table>
-</p>
-<script>
-    $("#gridCategories").kendoGrid({
-        columns: [
-            { field: "name" },
-            { field: "shortname", filterable: false },
-            { field: "sortseq", filterable: false },
-            { field: "publiccategory", filterable: false },
-            { field: "buttons", filterable: false },
+                                                                                      $("#searchCateg").on("keyup change", function (e) {
+                                                                                          var grid = $("#gridCateg").data("kendoGrid");
+                                                                                          var searchTxt = $("#searchCateg").val();
 
-        ],
-        toolbar: ["excel"],
-        excel: {
-            fileName: "DealCategories.xlsx",
-            allPages: true
-        },
-        filterable: true,
-        height: 500,
-        groupable: true,
-        sortable: true,
-        pageable: {
-            messages: {
-                empty: "No items to display"
-            },
-            input: false,
-            refresh: true,
-            pageSizes: true,
-            pageSizes: [10, 20, 30, 50]
-        }
-    });
+                                                                                          if (searchTxt.length >= 3) {
 
-    $("#gridCategories").data("kendoGrid").dataSource.pageSize(10);
+                                                                                              grid.dataSource.filter({
+                                                                                                  logic: "or", filters: [
+                                                                                                      { field: "Name", operator: "contains", value: searchTxt },
+                                                                                                      { field: "ShortName", operator: "contains", value: searchTxt },
+                                                                                                      { field: "Status", operator: "contains", value: searchTxt }
+                                                                                                  ]
+                                                                                              });
+                                                                                          }
+                                                                                          else if (searchTxt.length == 0) {
+                                                                                              grid.dataSource.filter([]);
+                                                                                          }
+                                                                                      });
 
-    $("#searchCategories").on("keyup change", function (e) {
-        var grid = $("#gridCategories").data("kendoGrid");
-        var searchTxt = $("#searchCategories").val();
+                                                                                  });
 
-        if (searchTxt.length >= 3) {
-
-            grid.dataSource.filter({
-                logic: "or", filters: [
-                    { field: "name", operator: "contains", value: searchTxt },
-                    { field: "shortname", operator: "contains", value: searchTxt },
-                    { field: "sortseq", operator: "contains", value: searchTxt },
-                    { field: "publiccategory", operator: "contains", value: searchTxt }]
-            });
-        }
-        else if (searchTxt.length == 0) {
-            grid.dataSource.filter([]);
-        }
-    });
-
-</script>
+                                                                              </script>

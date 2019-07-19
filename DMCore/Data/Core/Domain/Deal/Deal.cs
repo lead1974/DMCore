@@ -14,8 +14,10 @@ namespace DMCore.Data.Core.Domain.Deal
         {
             
         }
+        [ScaffoldColumn(false)]
         public long Id { get; set; }
 
+        [Display(Name = "Deal Title")]
         public string Title { get; set; }
 
         public string Instructions { get; set; }
@@ -23,7 +25,7 @@ namespace DMCore.Data.Core.Domain.Deal
         {
             get { return (Instructions ?? string.Empty).Split(NewLine); }
         }
-
+        [Display(Name = "Deal URL")]
         public string URL { get; set; }
 
         public string Price { get; set; }
@@ -68,7 +70,7 @@ namespace DMCore.Data.Core.Domain.Deal
         public DateTime EndTS { get; set; }
 
         public bool  Approved { get; set; }
-        public int  Status { get; set; }
+        public string Status { get; set; }
 
         public int Views { get; set; }
         public int Likes { get; set; }

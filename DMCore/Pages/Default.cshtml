@@ -34,21 +34,26 @@
 </style>
 
 @*
-    <script type="text/x-kendo-template" id="template">
-    <div>
-        <i class="#: FAIcon #"></i><a href=""> #: ShortName #</a>
-        <i class="#: FAIcon #"></i><a href=""> #: Name #</a>
-        <i class="fas fa-dumbbell"></i><a href=""> #: SortSeq #</a>
+        <script type="text/x-kendo-template" id="template">
+        <div>
+            <i class="#: FAIcon #"></i><a href=""> #: ShortName #</a>
+            <i class="#: FAIcon #"></i><a href=""> #: Name #</a>
+            <i class="fas fa-dumbbell"></i><a href=""> #: SortSeq #</a>
 
-    </div>
-</script>
+        </div>
+    </script>
 
-@(Html.Kendo().ListView(Model.dcList) //The ListView will be initially bound to the Model which is the Products table.
-                                .Name("dcListView") //The name of the ListView is mandatory. It specifies the "id" attribute of the widget.
-                                .TagName("div") //The tag name of the ListView is mandatory. It specifies the element which wraps all ListView items.
-                                .ClientTemplateId("template") //This template will be used for rendering the ListView items.
-)
+    @(Html.Kendo().ListView(Model.dcList) //The ListView will be initially bound to the Model which is the Products table.
+                                    .Name("dcListView") //The name of the ListView is mandatory. It specifies the "id" attribute of the widget.
+                                    .TagName("div") //The tag name of the ListView is mandatory. It specifies the element which wraps all ListView items.
+                                    .ClientTemplateId("template") //This template will be used for rendering the ListView items.
+    )
 *@
+<a asp-page="/Deal/Post" class="btn btn-primary btn-lg" onclick="busyLoadShow()">
+    <span class="fa fa-plus"></span>
+    &nbsp; Post a Deal
+</a>
+
 <br />
 <input class="k-textbox" id="searchCategories" /> <i>Minimum 3 charachters required to trigger search function</i>
 <br />
@@ -99,10 +104,10 @@
                         @*@Html.Partial("_TableButtonsPartial", new IndividualButtonPartial { Id = item.Id })*@
                     </td>
                 </tr>
-             }
+            }
 
-         </tbody>
-</table>
+        </tbody>
+    </table>
 </p>
 @*
     <p>
@@ -283,42 +288,42 @@
         </div>
     </p>*@
 @*@(Html.Kendo().Grid<DealCategory>().Name("grid")
-                                            .Groupable()
-                                            .Sortable()
-                                            .Editable()
-                                            .Scrollable()
-                                            .ToolBar(x => x.Excel())
-                                            .Columns(columns =>
-                                            {
-                                                columns.Bound(column => column.Name);
-                                                columns.Bound(column => column.ShortName);
-                                                columns.Bound(column => column.SortSeq);
-                                                columns.Command(column =>
+                                                .Groupable()
+                                                .Sortable()
+                                                .Editable()
+                                                .Scrollable()
+                                                .ToolBar(x => x.Excel())
+                                                .Columns(columns =>
                                                 {
-                                                    column.Edit();
-                                                    column.Destroy();
-                                                });
-                                            })
-                                             .Excel(excel => excel
-                                                        .FileName("Export.xlsx")
-                                                        .Filterable(true)
-                                                        .ProxyURL("/Index?handler=Save")
-                                                    )
-                                            .DataSource(ds => ds.Ajax()
-                                                   .Read(r => r.Url("/Index?handler=Read").Data("forgeryToken"))
-                                                   .Update(u => u.Url("/Index?handler=Update").Data("forgeryToken"))
-                                                   .Create(c => c.Url("/Index?handler=Create").Data("forgeryToken"))
-                                                   .Destroy(d => d.Url("/Index?handler=Destroy").Data("forgeryToken"))
-                                                   .Model(m => m.Id(id => id.Id))
-                                                .PageSize(10)
-                                            )
-                                            .Pageable()
-)
-<script>
-    function forgeryToken() {
-        return kendo.antiForgeryTokens();
-    }
-</script>*@
+                                                    columns.Bound(column => column.Name);
+                                                    columns.Bound(column => column.ShortName);
+                                                    columns.Bound(column => column.SortSeq);
+                                                    columns.Command(column =>
+                                                    {
+                                                        column.Edit();
+                                                        column.Destroy();
+                                                    });
+                                                })
+                                                 .Excel(excel => excel
+                                                            .FileName("Export.xlsx")
+                                                            .Filterable(true)
+                                                            .ProxyURL("/Index?handler=Save")
+                                                        )
+                                                .DataSource(ds => ds.Ajax()
+                                                       .Read(r => r.Url("/Index?handler=Read").Data("forgeryToken"))
+                                                       .Update(u => u.Url("/Index?handler=Update").Data("forgeryToken"))
+                                                       .Create(c => c.Url("/Index?handler=Create").Data("forgeryToken"))
+                                                       .Destroy(d => d.Url("/Index?handler=Destroy").Data("forgeryToken"))
+                                                       .Model(m => m.Id(id => id.Id))
+                                                    .PageSize(10)
+                                                )
+                                                .Pageable()
+    )
+    <script>
+        function forgeryToken() {
+            return kendo.antiForgeryTokens();
+        }
+    </script>*@
 
 @*<table class="table">
         <tr>
@@ -455,7 +460,7 @@
                     { field: "shortname", filterable: false },
                     { field: "sortseq", filterable: false },
                     { field: "publiccategory", filterable: false },
-                    { field: "buttons", filterable: false},
+                    { field: "buttons", filterable: false },
 
                 ],
                 toolbar: ["excel"],

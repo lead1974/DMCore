@@ -52,32 +52,34 @@
             <div class="navbar-collapse collapse">
                 Site Administration
                 @*<ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
-                </ul>*@
+                        <li><a asp-page="/Index">Home</a></li>
+                        <li><a asp-page="/About">About</a></li>
+                        <li><a asp-page="/Contact">Contact</a></li>
+                    </ul>*@
             </div>
         </div>
     </nav>
-    <breadcrumb asp-homepage-title="Site Administration"
-                asp-homepage-url="/admin"
-                asp-bootstrap-version="V4"
-                asp-homepage-glyphicon="glyphicon glyphicon-home"></breadcrumb>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer id="footer" class="navbar navbar-text">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        &copy; @DateTime.Now.Year <a target="_blank" href="http://DealsMo.com/" title="Free Deals Daily and More">@configuration.GetSection("SiteSettings")["SiteDomain"]</a>. All Rights Reserved.
+        <section id="breadcrumb" class="container">
+            <breadcrumb asp-homepage-title="Site Administration"
+                    asp-homepage-url="/admin"
+                    asp-bootstrap-version="V4"
+                    asp-homepage-glyphicon="glyphicon glyphicon-home"></breadcrumb>
+        </section>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer id="footer" class="navbar navbar-text">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            &copy; @DateTime.Now.Year <a target="_blank" href="http://DealsMo.com/" title="Free Deals Daily and More">@configuration.GetSection("SiteSettings")["SiteDomain"]</a>. All Rights Reserved.
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer><!--/#footer-->
-    </div>
+            </footer><!--/#footer-->
+        </div>
 
 
-    @RenderSection("Scripts", required: false)
+        @RenderSection("Scripts", required: false)
 </body>
 </html>

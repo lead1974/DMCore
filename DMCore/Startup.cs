@@ -97,10 +97,10 @@ namespace DMCore
 
             services.AddMvc(options =>
                 {
-                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                    options.Filters.Add(new RequireHttpsAttribute());
+                    //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                    //options.Filters.Add(new RequireHttpsAttribute());
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
@@ -162,7 +162,7 @@ namespace DMCore
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
+                //app.UseHsts();
             }
 
             //security: http to https forwarding
@@ -176,7 +176,7 @@ namespace DMCore
             app.UseXContentTypeOptions(); //prevent attack coming back with different data than it was submitted for
 
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
